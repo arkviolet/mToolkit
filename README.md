@@ -10,7 +10,7 @@ c++ 工具库
     toolkit_enckit
 
 linux 交叉编译环境
-    linux_crosss_env
+    linux_cross_env
 
 交叉编译环境
     docker_platformer
