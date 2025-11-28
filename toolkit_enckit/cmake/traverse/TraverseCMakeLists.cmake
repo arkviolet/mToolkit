@@ -1,0 +1,80 @@
+MACRO(TRAVERSE_DIRECTORY_ADD_PROJECT)
+	IF(NOT ${ARGC} EQUAL 1)
+
+		MESSAGE(FATAL_ERROR "There is one and only one parameter")
+
+	ENDIF()
+
+	FILE(GLOB_RECURSE CMAKE_FILES "${ARGV0}/CMakeLists.txt")
+
+	FOREACH(source ${CMAKE_FILES})
+
+		FILE(RELATIVE_PATH relative ${ARGV0} ${source})
+
+		STRING(FIND ${relative} "/" subPos)
+
+		IF(NOT ${subPos} EQUAL -1)
+
+			STRING(FIND ${relative} "/CMakeLists.txt" cmakePos)
+
+			IF(${subPos} EQUAL ${cmakePos})
+
+				STRING(SUBSTRING ${relative} 0 ${subPos} folder)
+
+				ADD_SUBDIRECTORY(${folder})
+
+			ENDIF()
+
+		ENDIF()
+
+	ENDFOREACH()
+
+ENDMACRO(TRAVERSE_DIRECTORY_ADD_PROJECT)
+
+MACRO(TRAVERSE_CURRENT_DIRECTORY_ADD_PROJECT)
+	IF(NOT ${ARGC} EQUAL 0)
+
+		MESSAGE(FATAL_ERROR "There is not need parameter")
+
+	ENDIF()
+
+	TRAVERSE_DIRECTORY_ADD_PROJECT(${CMAKE_CURRENT_LIST_DIR})
+
+ENDMACRO(TRAVERSE_CURRENT_DIRECTORY_ADD_PROJECT)
+
+MACRO(RECURSE_DIRECTORY_ADD_PROJECT)
+	IF(NOT ${ARGC} EQUAL 1)
+
+		MESSAGE(FATAL_ERROR "There is one and only one parameter")
+
+	ENDIF()
+
+	FILE(GLOB_RECURSE CMAKE_FILES "${ARGV0}/CMakeLists.txt")
+
+	FOREACH(source ${CMAKE_FILES})
+		FILE(RELATIVE_PATH relative ${ARGV0} ${source})
+
+		STRING(FIND ${relative} "/CMakeLists.txt" cmakePos)
+
+		IF(NOT ${cmakePos} EQUAL -1)
+
+			STRING(SUBSTRING ${relative} 0 ${cmakePos} folder)
+
+			ADD_SUBDIRECTORY(${folder})
+
+		ENDIF()
+
+	ENDFOREACH()
+
+ENDMACRO(RECURSE_DIRECTORY_ADD_PROJECT)
+
+MACRO(RECURSE_CURRENT_DIRECTORY_ADD_PROJECT)
+	IF(NOT ${ARGC} EQUAL 0)
+
+		MESSAGE(FATAL_ERROR "There is not need parameter")
+
+	ENDIF()
+
+	RECURSE_DIRECTORY_ADD_PROJECT(${CMAKE_CURRENT_LIST_DIR})
+
+ENDMACRO(RECURSE_CURRENT_DIRECTORY_ADD_PROJECT)

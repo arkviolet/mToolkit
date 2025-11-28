@@ -1,0 +1,74 @@
+MACRO(RECURSE_DIRECTORY_SOURCE_FILE)
+
+	IF(NOT ${ARGC} EQUAL 2)
+
+		MESSAGE(FATAL_ERROR "There is two and only two parameter")
+
+	ENDIF()
+
+	FILE(GLOB_RECURSE ${ARGV0}	"${ARGV1}/*.c"
+								"${ARGV1}/*.cc"
+								"${ARGV1}/*.cpp"
+								"${ARGV1}/*.h"
+								"${ARGV1}/*.hh"
+								"${ARGV1}/*.hpp")
+
+ENDMACRO(RECURSE_DIRECTORY_SOURCE_FILE)
+
+MACRO(RECURSE_CURRENT_DIRECTORY_SOURCE_FILE)
+	IF(NOT ${ARGC} EQUAL 1)
+
+		MESSAGE(FATAL_ERROR "There is one and only one parameter")
+
+	ENDIF()
+
+	RECURSE_DIRECTORY_SOURCE_FILE(${ARGV0} ${CMAKE_CURRENT_LIST_DIR})
+
+ENDMACRO(RECURSE_CURRENT_DIRECTORY_SOURCE_FILE)
+
+MACRO(TRAVERSE_DIRECTORY_SOURCE_FILE)
+	IF(NOT ${ARGC} EQUAL 2)
+
+		MESSAGE(FATAL_ERROR "There is two and only two parameter")
+
+	ENDIF()
+
+	FILE(GLOB ${ARGV0}	"${ARGV1}/*.c"
+						"${ARGV1}/*.cc"
+						"${ARGV1}/*.cpp"
+						"${ARGV1}/*.h"
+						"${ARGV1}/*.hh"
+						"${ARGV1}/*.hpp")
+
+ENDMACRO(TRAVERSE_DIRECTORY_SOURCE_FILE)
+
+MACRO(TRAVERSE_CURRENT_DIRECTORY_SOURCE_FILE)
+	IF(NOT ${ARGC} EQUAL 1)
+
+		MESSAGE(FATAL_ERROR "There is one and only one parameter")
+
+	ENDIF()
+
+	TRAVERSE_DIRECTORY_SOURCE_FILE(${ARGV0} ${CMAKE_CURRENT_LIST_DIR})
+
+ENDMACRO(TRAVERSE_CURRENT_DIRECTORY_SOURCE_FILE)
+
+FUNCTION(REDEFINE_FILE_MACRO targetname)
+
+	GET_TARGET_PROPERTY(source_files "${targetname}" SOURCES)
+
+	FOREACH (sourcefile ${source_files})
+
+		GET_PROPERTY(defs SOURCE "${sourcefile}" PROPERTY COMPILE_DEFINITIONS)
+
+		GET_FILENAME_COMPONENT(filepath "${sourcefile}" ABSOLUTE)
+
+		STRING(REGEX REPLACE ".*/" "" relpath ${filepath})
+
+		LIST(APPEND defs "__FILE__=\"${relpath}\"")
+
+		SET_PROPERTY(SOURCE "${sourcefile}" PROPERTY COMPILE_DEFINITIONS ${defs} )
+
+	ENDFOREACH ()
+
+ENDFUNCTION()

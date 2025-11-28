@@ -1,0 +1,9 @@
+version: '3'
+services:
+  dev:
+    image: cross:latest
+    volumes:
+      - /opt/:/opt/
+      - /home/i/.ssh:/home/developer/.ssh
+      - /home/i/.gitconfig:/home/developer/.gitconfig
+      - ../:/home/developer/workspace

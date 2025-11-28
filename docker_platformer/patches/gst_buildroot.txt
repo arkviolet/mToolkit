@@ -1,0 +1,21 @@
+[host_machine]
+system = 'linux'
+cpu_family = 'aarch64'
+cpu = 'cortex-a55'
+endian = 'little'
+[properties]
+pkg_config_libdir = ['/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/aarch64-buildroot-linux-gnu/sysroot/usr/lib/pkgconfig']
+sys_root = '/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/aarch64-buildroot-linux-gnu/sysroot'
+
+c_args = ['--sysroot=/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/aarch64-buildroot-linux-gnu/sysroot']
+cpp_args = ['--sysroot=/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/aarch64-buildroot-linux-gnu/sysroot']
+
+cmake_toolchain_file = '/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/share/buildroot/toolchainfile.cmake'
+cmake_defaults = false
+
+[binaries]
+c = '/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/bin/aarch64-buildroot-linux-gnu-gcc'
+cpp = '/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/bin/aarch64-buildroot-linux-gnu-g++'
+ar = '/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/bin/aarch64-buildroot-linux-gnu-gcc-ar'
+strip = '/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/bin/aarch64-buildroot-linux-gnu-strip'
+pkgconfig = '/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/bin/pkg-config'
