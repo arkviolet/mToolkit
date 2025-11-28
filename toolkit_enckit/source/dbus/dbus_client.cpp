@@ -1,4 +1,3 @@
-
 #include "dbus_client.h"
 
 namespace mToolkit {
